@@ -56,10 +56,14 @@ agent's response style using AMD Developer Cloud.
 
 - **Hardware:** AMD MI300X GPU (single-GPU instance, AMD Developer Cloud)
 - **Environment:** PyTorch, ROCm, Docker-based PyTorch container
-- **Base model:** Meta-Llama-3-8B-Instruct
+- <img width="1861" height="910" alt="fine-tuning in progress" src="https://github.com/user-attachments/assets/65d5c08d-e91e-4716-9655-26fb71a6d464" />
+- **Base model:** GLM 5.2
 - **Method:** LoRA (Low-Rank Adaptation) via Hugging Face `peft`
+- <img width="1830" height="741" alt="wellness agent finetuning" src="https://github.com/user-attachments/assets/5cae41b8-8f61-43bc-ae78-19e0a4f199cc" />
+
 - **Dataset:** 39 curated examples of phase-aware, non-diagnostic wellness
   check-in responses (`/finetune/dataset.json`)
+  
 - **Training script:** `/finetune/train.py`
 - **Inference/test script:** `/finetune/test.py`
 
