@@ -5,13 +5,16 @@ Takes a user's mood/journal entry + their current cycle phase (from
 cycle_predictor.py) and returns a warm, phase-aware, non-diagnostic response
 plus structured mood/theme data for the insights dashboard.
 
-Model: MiniMax M3 on Fireworks (accounts/fireworks/models/minimax-m3)
-  - 512K context, reasoning model - may emit <think>...</think> before
-    its actual answer. This code strips that automatically.
-  - General-purpose, not empathy-tuned specifically - the system prompt
-    below carries most of the weight. If responses feel flat or clinical
-    once you're testing with real entries, GLM 5.2 is the upgrade path -
-    same code, just swap MODEL_ID.
+Model: GLM 5.2 on Fireworks, serverless (accounts/fireworks/models/glm-5p2)
+  - Z.ai flagship MoE model, 1M-token context, reasoning model.
+  - Emits hidden reasoning tokens before its visible answer - this code
+    strips any <think>...</think> automatically, and max_tokens is set
+    higher (900) so reasoning doesn't eat the whole budget.
+  - Serverless: pay-per-token from existing credits, no deployment step
+    or credit card needed (unlike Gemma 4, which is Dedicated-only on
+    Fireworks and requires a paid deployment).
+  - MODEL_ID_FALLBACK below (MiniMax M3, serverless) is kept as a tested
+    working fallback if GLM 5.2 has issues close to the deadline.
 
 Setup:
   export FIREWORKS_API_KEY="your-api-key"
@@ -31,7 +34,20 @@ import json
 import time
 import requests
 
-MODEL_ID = "accounts/fireworks/models/minimax-m3"
+MODEL_ID = "accounts/fireworks/models/glm-5p2"
+# Switched from Gemma 4 (Dedicated deployment required a credit card) to
+# GLM 5.2 - serverless, pay-per-token from existing Fireworks credits, no
+# deployment step needed. This does mean Elara no longer qualifies for the
+# "best use of Gemma 4" prize track specifically, but GLM 5.2 is Fireworks'
+# flagship general-purpose model ("Opus-level intelligence" per their own
+# positioning) and a strong choice on its own merits.
+#
+# IMPORTANT: GLM 5.2 is a reasoning model - it emits hidden reasoning
+# tokens before its visible answer, and those count against max_tokens.
+# max_tokens is set higher below (was 400) specifically so reasoning
+# doesn't silently eat the whole budget and truncate the actual JSON reply
+# to nothing.
+MODEL_ID_FALLBACK = "accounts/fireworks/models/minimax-m3"
 API_URL = "https://api.fireworks.ai/inference/v1/chat/completions"
 
 SYSTEM_PROMPT = """You are the wellness companion inside Elara, a cycle intelligence and \
@@ -112,7 +128,8 @@ def get_wellness_response(cycle_phase: str, mood_entry: str,
 
     payload = {
         "model": MODEL_ID,
-        "max_tokens": 400,
+        "max_tokens": 900,  # raised from 400 - GLM 5.2's hidden reasoning
+                            # tokens count against this budget too
         "temperature": 0.7,
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
