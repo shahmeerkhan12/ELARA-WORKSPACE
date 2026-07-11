@@ -116,6 +116,5 @@ backend API above.
 Built by Team Radon for the AMD Developer Hackathon: ACT II.
 
 ## Demo
-
-[Add demo video link here]
-[Add live app URL here, if deployed]
+visit app
+https://d7qylgjg9x36k83q00hz6ql5w.nativelyai.app/
