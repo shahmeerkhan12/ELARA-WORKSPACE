@@ -1,4 +1,6 @@
 # Elara — Cycle Intelligence & Emotional Wellness Platform
+<img width="1920" height="1080" alt="Screenshot (378)" src="https://github.com/user-attachments/assets/7049a578-f2e2-43a5-8113-301ec18ee672" />
+
 
 Built for the **AMD Developer Hackathon: ACT II** (Unicorn track)
 
@@ -44,7 +46,7 @@ running side by side.
 ## Tech stack
 
 - **Backend:** Python, FastAPI, SQLite, pandas, scikit-learn
-- **Wellness agent:** Fireworks AI (MiniMax M3)
+- **Wellness agent:** Fireworks AI (MiniMax M3 and GLM 5.2)
 - **Frontend:** React (built with NativelyAI)
 - **AMD Developer Cloud:** LoRA fine-tuning of the wellness agent's response
   style — see [AMD Developer Cloud usage](#amd-developer-cloud-usage) below
@@ -55,6 +57,8 @@ As part of Elara's tech stack, we fine-tuned a LoRA adapter for the wellness
 agent's response style using AMD Developer Cloud.
 
 - **Hardware:** AMD MI300X GPU (single-GPU instance, AMD Developer Cloud)
+- <img width="1897" height="1024" alt="gpu usage dashboard2 web interface" src="https://github.com/user-attachments/assets/d709ad3d-f210-4c67-84c0-746af2c88105" />
+
 - **Environment:** PyTorch, ROCm, Docker-based PyTorch container
 - <img width="1861" height="910" alt="fine-tuning in progress" src="https://github.com/user-attachments/assets/65d5c08d-e91e-4716-9655-26fb71a6d464" />
 - **Base model:** GLM 5.2
@@ -69,6 +73,8 @@ agent's response style using AMD Developer Cloud.
 
 GPU usage verified via `rocm-smi` on the training instance — see
 `/finetune/screenshots`.
+<img width="1920" height="1080" alt="Screenshot (391)" src="https://github.com/user-attachments/assets/7f478819-d59d-4ce5-9769-6959c9db3585" />
+
 
 ## Project structure
 
@@ -87,6 +93,7 @@ GPU usage verified via `rocm-smi` on the training instance — see
   screenshots/              - proof of AMD GPU usage (rocm-smi, dashboard, training run)
 /frontend
   (React app, built with NativelyAI)
+https://d7qylgjg9x36k83q00hz6ql5w.nativelyai.app/
 README.md
 ```
 
@@ -106,6 +113,7 @@ See `/frontend` — built and deployed via NativelyAI, configured to call the
 backend API above.
 
 ## API endpoints
+<img width="1920" height="1080" alt="Screenshot (394)" src="https://github.com/user-attachments/assets/0c23bc86-b7ae-421c-9b50-80fcf577a253" />
 
 | Method | Endpoint | Description |
 |---|---|---|
