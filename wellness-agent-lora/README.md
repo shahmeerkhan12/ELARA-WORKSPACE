@@ -1,9 +1,9 @@
 ---
-base_model: NousResearch/Meta-Llama-3-8B-Instruct
+base_model: GLM 5.2
 library_name: peft
 pipeline_tag: text-generation
 tags:
-- base_model:adapter:NousResearch/Meta-Llama-3-8B-Instruct
+- base_model:adapter:GLM 5.2
 - lora
 - transformers
 ---
